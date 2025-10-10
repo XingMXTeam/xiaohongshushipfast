@@ -1,0 +1,95 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout>
+  <section style="display:flex; gap:24px; align-items:stretch; min-height: calc(100vh - 200px);">
+    <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+      <h2>Markdown → 小红书图片</h2>
+      <textarea id="md" style="flex:1; width:100%; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px; padding:12px; border:1px solid #e5e7eb; border-radius:8px;" placeholder="在此粘贴 Markdown"># 小红书笔记制作工具
+
+这是一个测试标题
+
+## 功能特点
+
+- 支持 Markdown 转图片
+- 自动分页
+- 笔记风格设计
+
+> 这是一个引用块，用来测试样式
+
+```javascript
+console.log('代码块测试');
+```
+
+---
+
+分割线测试</textarea>
+      <div style="display:flex; gap:12px;">
+        <button id="previewBtn" style="padding:8px 14px; background:#0ea5e9; color:white; border:none; border-radius:8px;">预览</button>
+        <button id="downloadZip" style="padding:8px 14px; background:#111827; color:white; border:none; border-radius:8px;">导出 ZIP</button>
+      </div>
+    </div>
+    <div style="flex:1;">
+      <div id="preview" style="width:360px; height:480px; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden; background:white; display:flex; align-items:center; justify-content:center; color:#6b7280;">预览区域</div>
+    </div>
+  </section>
+
+  <script>
+    const md = document.getElementById('md');
+    const preview = document.getElementById('preview');
+    const previewBtn = document.getElementById('previewBtn');
+    const downloadZip = document.getElementById('downloadZip');
+
+    async function fetchImage(zip=false){
+      const markdownValue = md.value || '';
+      console.log('Sending markdown:', markdownValue);
+      
+      // Use GET request with URL parameters to avoid body parsing issues
+      const encodedMarkdown = encodeURIComponent(markdownValue);
+      const url = `/api/xhs/render?markdown=${encodedMarkdown}${zip ? '&zip=1' : ''}`;
+      
+      const res = await fetch(url, {
+        method: 'GET'
+      });
+      if(!res.ok){
+        const t = await res.text();
+        alert('渲染失败：' + t);
+        return null;
+      }
+      return await res.blob();
+    }
+
+    previewBtn?.addEventListener('click', async () => {
+      if (!md.value.trim()) {
+        alert('请先输入 Markdown 内容');
+        return;
+      }
+      const blob = await fetchImage(false);
+      if(!blob) return;
+      const url = URL.createObjectURL(blob);
+      preview.innerHTML = '';
+      const img = new Image();
+      img.src = url;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      preview.appendChild(img);
+    });
+
+    downloadZip?.addEventListener('click', async () => {
+      if (!md.value.trim()) {
+        alert('请先输入 Markdown 内容');
+        return;
+      }
+      const blob = await fetchImage(true);
+      if(!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'xhs-slides.zip';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</Layout>
