@@ -4,6 +4,34 @@
 
 This project is an early-stage product experiment. The goal is not to build another generic AI writing tool, but to build a repeatable content operating system for creators who need to publish consistently.
 
+## Current runnable version
+
+The repository now contains a runnable MVP prototype:
+
+- `/` — product landing page
+- `/dashboard` — mock AI operator dashboard
+- `src/domain/operator/types.ts` — creator-operation domain model
+- `src/domain/operator/workflows/xiaohongshuContentWorkflow.ts` — workflow skeleton
+- `src/domain/operator/agents/agentRegistry.ts` — agent role registry
+- `src/domain/operator/mockOperator.ts` — mock output used by the dashboard
+- `docs/architecture.md` — product and architecture spec
+
+The current version does not require Supabase or an LLM API key. It uses mock data to demonstrate the first complete workflow.
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:4321/
+http://localhost:4321/dashboard
+```
+
 ## Why this exists
 
 Many creators and small teams do not fail because they cannot write one post. They fail because they cannot maintain a repeatable content loop:
@@ -42,57 +70,69 @@ Account Profile
 | Account Profile | Understand the creator, niche, audience, tone, offer, and constraints. |
 | Competitor Research | Track similar accounts, collect useful patterns, and extract reusable ideas. |
 | Topic Pool | Maintain a backlog of content ideas with angle, audience, and priority. |
-| Draft Generator | Generate Xiaohongshu-style note drafts, titles, outlines, and hooks. |
-| Cover Suggestion | Suggest cover text, visual direction, and emotional trigger. |
-| Publishing Calendar | Turn ideas into a weekly publishing plan. |
-| Review Loop | Compare output with account positioning and improve future drafts. |
+| Note Brief | Turn one topic into a production-ready Xiaohongshu note brief. |
+| Draft Generator | Generate Xiaohongshu-style note drafts, titles, hashtags, and cover copy. |
+| Review Agent | Score the draft against positioning, hook strength, usefulness, readability, and AI-tone risk. |
+| Publishing Calendar | Turn approved ideas into a weekly publishing plan. |
 
-## Current status
+## Architecture direction
 
-This repository is in MVP exploration.
+The architecture borrows workflow ideas from `agent-workstation`, but keeps the product vertical and opinionated.
 
-Current priorities:
+Borrow:
 
-- Replace starter template residue with a focused product structure.
-- Define the first usable workflow: account profile -> topic -> draft -> review.
-- Build a minimal dashboard for managing topic pools and drafts.
-- Add prompt templates and evaluation criteria for Xiaohongshu notes.
-- Connect the project with real creator-operation use cases.
+- agent roles
+- explicit workflow steps
+- structured outputs
+- artifacts / trace logs
+- human review checkpoints
+
+Do not build yet:
+
+- universal workflow builder
+- generic collaboration workspace
+- complex permissions
+- plugin marketplace
+- automatic publishing
 
 ## Tech stack
 
-The current implementation is based on:
+Current implementation:
 
 - Astro
-- Supabase
-- Netlify-oriented deployment flow
+- TypeScript
+- Tailwind-style utility classes
+- Mock workflow data
 
-The stack may change as the product direction becomes clearer. The important part is not the framework itself, but whether the system can support a repeatable creator operation workflow.
+Supabase may still be used later for persistence, but it is no longer required for the current demo.
 
 ## Roadmap
 
-### Phase 1: MVP workflow
+### Phase 1: Runnable MVP prototype
 
-- [ ] Account profile form
-- [ ] Topic pool management
-- [ ] Xiaohongshu note brief generator
-- [ ] Draft generation and manual editing
-- [ ] Simple weekly publishing calendar
+- [x] Replace starter homepage with product landing page.
+- [x] Add operator dashboard prototype.
+- [x] Define domain model.
+- [x] Define workflow skeleton.
+- [x] Add mock output for topic, brief, draft, review, and publishing plan.
+- [ ] Add editable account profile form.
+- [ ] Add manual topic creation.
+- [ ] Add local save / copy actions.
 
-### Phase 2: Research and iteration
+### Phase 2: Real AI workflow
 
-- [ ] Competitor account tracking
-- [ ] Note pattern extraction
-- [ ] Title and hook scoring
-- [ ] Draft quality checklist
-- [ ] Feedback loop from published content
+- [ ] Add prompt templates for each agent.
+- [ ] Add structured LLM output generation.
+- [ ] Add review scoring and rewrite suggestions.
+- [ ] Add run history and trace logs.
 
-### Phase 3: Service/product packaging
+### Phase 3: Creator-operation product
 
-- [ ] Demo landing page
-- [ ] Example creator workflows
-- [ ] Case study documentation
-- [ ] SEO/GEO pages for long-tail discovery
+- [ ] Competitor account tracking.
+- [ ] Note pattern extraction.
+- [ ] Publishing calendar persistence.
+- [ ] Feedback loop from published content.
+- [ ] SEO/GEO landing pages.
 
 ## Positioning
 
@@ -106,5 +146,6 @@ This project sits at the intersection of:
 
 ## Related
 
+- Architecture: [`docs/architecture.md`](docs/architecture.md)
 - Personal site: [maoxunxing.com](https://maoxunxing.com)
 - GitHub profile: [XingMXTeam](https://github.com/XingMXTeam)
