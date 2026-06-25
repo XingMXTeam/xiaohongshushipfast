@@ -1,0 +1,189 @@
+---
+import Layout from "../components/Layout.astro";
+import {
+  demoAccountProfile,
+  demoNoteBrief,
+  demoNoteDraft,
+  demoPublishingPlan,
+  demoReviewResult,
+  demoTopicIdeas,
+} from "../domain/operator/mockOperator";
+import { xiaohongshuContentWorkflow } from "../domain/operator/workflows/xiaohongshuContentWorkflow";
+---
+
+<Layout title="Xiaohongshu AI Operator Dashboard">
+  <section class="pb-8">
+    <p class="mb-3 inline-flex rounded-full border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm text-rose-200">
+      Runnable MVP prototype · mock workflow
+    </p>
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <h1 class="text-4xl font-bold">AI 数字运营人 Dashboard</h1>
+        <p class="mt-3 max-w-3xl text-neutral-300">
+          这个页面用 mock 数据跑通完整流程：账号画像 → 选题池 → Note Brief → 草稿 → 审核 → 发布计划。下一步只需要把 mock output 换成真实 LLM structured output。
+        </p>
+      </div>
+      <a
+        href="/"
+        class="rounded-full border border-white/15 px-5 py-3 text-center text-sm font-semibold hover:bg-white/10"
+      >
+        返回首页
+      </a>
+    </div>
+  </section>
+
+  <section class="grid gap-3 pb-8 md:grid-cols-4 lg:grid-cols-7">
+    {xiaohongshuContentWorkflow.map((step, index) => (
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+        <div class="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-rose-400/15 text-sm text-rose-200">
+          {index + 1}
+        </div>
+        <h2 class="text-sm font-semibold">{step.name}</h2>
+        <p class="mt-2 text-xs leading-5 text-neutral-400">{step.description}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="space-y-6">
+      <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+        <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Account Profile</p>
+        <h2 class="mt-2 text-2xl font-bold">{demoAccountProfile.name}</h2>
+        <div class="mt-5 space-y-4 text-sm text-neutral-300">
+          <p><span class="text-neutral-500">Niche:</span> {demoAccountProfile.niche}</p>
+          <p><span class="text-neutral-500">Offer:</span> {demoAccountProfile.offer}</p>
+          <div>
+            <p class="mb-2 text-neutral-500">Audience</p>
+            <div class="flex flex-wrap gap-2">
+              {demoAccountProfile.audience.map((item) => (
+                <span class="rounded-full bg-white/10 px-3 py-1">{item}</span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p class="mb-2 text-neutral-500">Content Pillars</p>
+            <div class="flex flex-wrap gap-2">
+              {demoAccountProfile.contentPillars.map((item) => (
+                <span class="rounded-full bg-rose-400/10 px-3 py-1 text-rose-100">{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+        <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Topic Pool</p>
+        <div class="mt-5 space-y-3">
+          {demoTopicIdeas.map((topic) => (
+            <article class="rounded-2xl border border-white/10 bg-neutral-900/70 p-4">
+              <div class="flex items-center justify-between gap-4">
+                <h3 class="font-semibold">{topic.title}</h3>
+                <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                  {topic.priority}
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-neutral-400">{topic.angle}</p>
+              <p class="mt-3 text-xs text-neutral-500">Intent: {topic.audienceIntent}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+        <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Note Brief</p>
+        <h2 class="mt-2 text-2xl font-bold">{demoNoteBrief.coverText}</h2>
+        <p class="mt-4 rounded-2xl bg-neutral-900/70 p-4 text-neutral-200">{demoNoteBrief.hook}</p>
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          <div>
+            <h3 class="mb-3 font-semibold">Outline</h3>
+            <ul class="space-y-2 text-sm text-neutral-300">
+              {demoNoteBrief.outline.map((item) => <li>• {item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3 class="mb-3 font-semibold">Key Points</h3>
+            <ul class="space-y-2 text-sm text-neutral-300">
+              {demoNoteBrief.keyPoints.map((item) => <li>• {item}</li>)}
+            </ul>
+          </div>
+        </div>
+        <div class="mt-5 rounded-2xl border border-white/10 p-4 text-sm text-neutral-300">
+          <p><span class="text-neutral-500">Visual:</span> {demoNoteBrief.visualDirection}</p>
+          <p class="mt-2"><span class="text-neutral-500">CTA:</span> {demoNoteBrief.cta}</p>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Draft</p>
+          <span class="rounded-full bg-blue-400/10 px-3 py-1 text-xs text-blue-200">{demoNoteDraft.status}</span>
+        </div>
+        <div class="mt-5 grid gap-3 md:grid-cols-3">
+          {demoNoteDraft.titles.map((title) => (
+            <div class="rounded-2xl bg-neutral-900/70 p-4 text-sm font-medium text-neutral-100">{title}</div>
+          ))}
+        </div>
+        <pre class="mt-5 whitespace-pre-wrap rounded-2xl bg-neutral-900/70 p-5 text-sm leading-7 text-neutral-200">{demoNoteDraft.body}</pre>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {demoNoteDraft.hashtags.map((tag) => (
+            <span class="rounded-full bg-white/10 px-3 py-1 text-sm text-neutral-300">#{tag}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <div class="flex items-center justify-between gap-4">
+        <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Review</p>
+        <span class="rounded-full bg-emerald-400/10 px-3 py-1 text-sm text-emerald-200">
+          Score {demoReviewResult.score}
+        </span>
+      </div>
+      <div class="mt-5 grid gap-4 md:grid-cols-2">
+        <div>
+          <h3 class="mb-3 font-semibold">Issues</h3>
+          <ul class="space-y-2 text-sm text-neutral-300">
+            {demoReviewResult.issues.map((item) => <li>• {item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="mb-3 font-semibold">Suggestions</h3>
+          <ul class="space-y-2 text-sm text-neutral-300">
+            {demoReviewResult.suggestions.map((item) => <li>• {item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <p class="text-sm uppercase tracking-[0.2em] text-rose-200">Publishing Plan</p>
+      <div class="mt-5 overflow-hidden rounded-2xl border border-white/10">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-white/5 text-neutral-400">
+            <tr>
+              <th class="p-3">Day</th>
+              <th class="p-3">Topic</th>
+              <th class="p-3">Metric</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/10">
+            {demoPublishingPlan.map((item) => {
+              const topic = demoTopicIdeas.find((topic) => topic.id === item.topicId);
+              return (
+                <tr class="bg-neutral-900/40">
+                  <td class="p-3 font-medium">{item.date}</td>
+                  <td class="p-3 text-neutral-300">{topic?.title}</td>
+                  <td class="p-3 text-neutral-400">{item.expectedFeedbackMetric}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Layout>
