@@ -1,7 +1,8 @@
 {
-  "name": "astro-supabase-starter",
+  "name": "xiaohongshu-ai-operator",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "AI content operation system for Xiaohongshu creators, personal brands, and small teams.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -9,6 +10,16 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "keywords": [
+    "xiaohongshu",
+    "ai",
+    "creator-tools",
+    "content-automation",
+    "seo",
+    "geo",
+    "astro",
+    "supabase"
+  ],
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/netlify": "^6.1.0",
