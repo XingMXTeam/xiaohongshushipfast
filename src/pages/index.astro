@@ -1,71 +1,92 @@
 ---
-import { getEntry } from "astro:content";
-import Alert from "../components/Alert.astro";
-import Guide from "../components/Guide.astro";
 import Layout from "../components/Layout.astro";
-import TableRow from "../components/TableRow.astro";
-import { supabase } from "../utils/database";
-
-export const prerender = false;
-
-let frameworks;
-let frameworksError;
-
-// Fetch frameworks data from Supabase if connection is set up
-if (supabase) {
-  const { data, error } = await supabase
-    .from("frameworks")
-    .select("*")
-    .order("likes", { ascending: false });
-  frameworks = data;
-  frameworksError = error;
-}
-
-// Get guides
-const connectGuide = await getEntry("guides", "guide-connect-supabase");
-const fetchDataGuide = await getEntry("guides", "guide-fetch-data");
 ---
 
-<Layout title="Web Frameworks">
-  {
-    supabase ? (
-      frameworks ? (
-        <>
-          <h1 class="mb-8 text-4xl font-bold">
-            Vote for Your Favorite Web Framework
-          </h1>
-          <table class="w-full text-left">
-            <thead>
-              <tr class="font-mono text-base border-t border-b">
-                <th>Name</th>
-                <th>Logo</th>
-                <th>Likes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {frameworks?.map((framework) => (
-                <TableRow framework={framework} />
-              ))}
-            </tbody>
-          </table>
-        </>
-      ) : (
-        <>
-          {frameworksError && (
-            <Alert
-              title={frameworksError.code}
-              text={frameworksError.message}
-              variant="error"
-            />
-          )}
-          {fetchDataGuide && <Guide guide={fetchDataGuide} />}
-        </>
-      )
-    ) : (
-      <>
-        <Alert title="Finish setting up your new site" text="Before your website is ready, you must complete the steps from the guide below to create, populate, and connect your Supabase database."/>
-        {connectGuide && <Guide guide={connectGuide} />}
-      </>
-    )
-  }
+<Layout title="Xiaohongshu AI Operator">
+  <section class="grid gap-10 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+    <div>
+      <p class="mb-4 inline-flex rounded-full border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm text-rose-200">
+        AI digital content operator for Xiaohongshu creators
+      </p>
+      <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">
+        给小红书创作者的
+        <span class="text-rose-300">AI 数字运营人</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-neutral-300">
+        不只是帮你写一篇文案，而是帮你持续完成账号画像、竞品拆解、选题池、Note Brief、草稿、审核和发布计划。
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="/dashboard"
+          class="rounded-full bg-rose-400 px-6 py-3 text-center font-semibold text-neutral-950 hover:bg-rose-300"
+        >
+          打开 MVP Dashboard
+        </a>
+        <a
+          href="https://github.com/XingMXTeam/xiaohongshushipfast"
+          class="rounded-full border border-white/15 px-6 py-3 text-center font-semibold text-white hover:bg-white/10"
+        >
+          查看 GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-rose-950/30">
+      <p class="text-sm text-neutral-400">MVP workflow</p>
+      <div class="mt-5 space-y-3">
+        {[
+          "账号画像",
+          "竞品研究",
+          "选题池",
+          "Note Brief",
+          "草稿生成",
+          "人工审核",
+          "发布计划",
+        ].map((step, index) => (
+          <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-rose-400/15 text-sm text-rose-200">
+              {index + 1}
+            </span>
+            <span class="font-medium">{step}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-4 py-10 md:grid-cols-3">
+    <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <h2 class="text-xl font-semibold">不是 AI 写作工具</h2>
+      <p class="mt-3 text-neutral-300">
+        写文案只是最后一步。真正要解决的是每天不知道发什么、没有选题池、缺少复盘和审核标准。
+      </p>
+    </div>
+    <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <h2 class="text-xl font-semibold">不是全自动代运营</h2>
+      <p class="mt-3 text-neutral-300">
+        MVP 保留人工审核节点。AI 负责推进流程，人负责判断品味、边界和最终发布。
+      </p>
+    </div>
+    <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <h2 class="text-xl font-semibold">是可复用工作流</h2>
+      <p class="mt-3 text-neutral-300">
+        借鉴 agent-workstation 思路，把内容运营拆成可追踪、可调试、可复用的 Agent workflow。
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-3xl border border-white/10 bg-gradient-to-br from-rose-500/10 to-purple-500/10 p-8">
+    <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="text-sm uppercase tracking-[0.25em] text-rose-200">Target users</p>
+        <h2 class="mt-3 text-3xl font-bold">先服务一类真实用户</h2>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <p class="rounded-2xl bg-neutral-950/60 p-4 text-neutral-200">个人 IP：知道自己要做内容，但坚持不下来。</p>
+        <p class="rounded-2xl bg-neutral-950/60 p-4 text-neutral-200">本地商家：想做小红书获客，但不想招全职运营。</p>
+        <p class="rounded-2xl bg-neutral-950/60 p-4 text-neutral-200">小团队：代运营太贵，自己又缺系统方法。</p>
+        <p class="rounded-2xl bg-neutral-950/60 p-4 text-neutral-200">AI 初学者：想用 AI，但不知道如何真正落地到内容流程。</p>
+      </div>
+    </div>
+  </section>
 </Layout>
