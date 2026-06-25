@@ -1,74 +1,110 @@
-# Astro Supabase Starter
+# Xiaohongshu AI Operator
 
-![Astro Supabase Starter Preview](astro-supabase-starter-preview.png)
+> An AI content operation system for Xiaohongshu creators, personal brands, local businesses, and small teams.
 
-**View demo:** [https://astro-supabase-starter.netlify.app/](https://astro-supabase-starter.netlify.app/)
+This project is an early-stage product experiment. The goal is not to build another generic AI writing tool, but to build a repeatable content operating system for creators who need to publish consistently.
 
-The Astro Supabase starter demonstrates how to integrate **Supabase** into an Astro project deployed on Netlify.
+## Why this exists
 
-## Deploying to Netlify
+Many creators and small teams do not fail because they cannot write one post. They fail because they cannot maintain a repeatable content loop:
 
-If you click "Deploy to Netlify" button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
+- They do not know what to post every day.
+- They cannot consistently turn ideas into publishable notes.
+- They cannot keep analyzing competitors manually.
+- They do not want to hire a full-time content operator.
+- Traditional agency service is expensive and hard to scale.
+- They want to use AI, but do not know how to make it work in a real operating process.
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-supabase-starter&fullConfiguration=true)
+This project explores a more practical model:
 
-## Astro Commands
+> Give every creator an AI digital editor that can assist with topic discovery, competitive research, drafting, publishing plans, and review loops.
 
-All commands are run from the root of the project, from a terminal:
+## Product direction
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+The system is designed around a content operation workflow:
 
-## Developing Locally
-
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.14+                                       |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management  |
-| [Netlify account](https://netlify.com/)                                      |
-| [Netlify CLI](https://docs.netlify.com/cli/get-started/).                    |
-| [Supabase account](https://supabase.com/)                                    |
-
-### Set up the database
-
-To use this template, you’ll need to set up and seed a new Supabase database.
-
-1. Create a new Supabase project.
-2. Run the SQL commands found in the `supabase/migrations` directory in the Supabase UI.
-3. To seed the database with data, you can import the contents of the `supabase/seed.csv` file in the Supabase UI.
-
-ℹ️ _Note: This template was created to be used with the Supabase extension for Netlify. If you don’t wish to use the Netlify Supabase extension, you will need to set the `SUPABASE_DATABASE_URL` and `SUPABASE_ANON_KEY` environment variables in the `.env` file._
-
-### Install and run locally
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. For the starter to have full functionality locally, please ensure you have an up-to-date version of Netlify CLI. Run:
-
-```
-npm install netlify-cli@latest -g
+```text
+Account Profile
+  -> Competitor Research
+  -> Topic Pool
+  -> Note Brief
+  -> Draft Generation
+  -> Human Review
+  -> Publishing Plan
+  -> Data Feedback
+  -> Next Content Iteration
 ```
 
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
+## Core modules
 
-```
-netlify link
-```
+| Module | Purpose |
+| --- | --- |
+| Account Profile | Understand the creator, niche, audience, tone, offer, and constraints. |
+| Competitor Research | Track similar accounts, collect useful patterns, and extract reusable ideas. |
+| Topic Pool | Maintain a backlog of content ideas with angle, audience, and priority. |
+| Draft Generator | Generate Xiaohongshu-style note drafts, titles, outlines, and hooks. |
+| Cover Suggestion | Suggest cover text, visual direction, and emotional trigger. |
+| Publishing Calendar | Turn ideas into a weekly publishing plan. |
+| Review Loop | Compare output with account positioning and improve future drafts. |
 
-4. Then, run the Astro.js development server via Netlify CLI:
+## Current status
 
-```
-netlify dev --target-port 4321
-```
+This repository is in MVP exploration.
 
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
+Current priorities:
 
-## Support
+- Replace starter template residue with a focused product structure.
+- Define the first usable workflow: account profile -> topic -> draft -> review.
+- Build a minimal dashboard for managing topic pools and drafts.
+- Add prompt templates and evaluation criteria for Xiaohongshu notes.
+- Connect the project with real creator-operation use cases.
 
-If you get stuck along the way, get help in our [support forums](https://answers.netlify.com/).
+## Tech stack
+
+The current implementation is based on:
+
+- Astro
+- Supabase
+- Netlify-oriented deployment flow
+
+The stack may change as the product direction becomes clearer. The important part is not the framework itself, but whether the system can support a repeatable creator operation workflow.
+
+## Roadmap
+
+### Phase 1: MVP workflow
+
+- [ ] Account profile form
+- [ ] Topic pool management
+- [ ] Xiaohongshu note brief generator
+- [ ] Draft generation and manual editing
+- [ ] Simple weekly publishing calendar
+
+### Phase 2: Research and iteration
+
+- [ ] Competitor account tracking
+- [ ] Note pattern extraction
+- [ ] Title and hook scoring
+- [ ] Draft quality checklist
+- [ ] Feedback loop from published content
+
+### Phase 3: Service/product packaging
+
+- [ ] Demo landing page
+- [ ] Example creator workflows
+- [ ] Case study documentation
+- [ ] SEO/GEO pages for long-tail discovery
+
+## Positioning
+
+This project sits at the intersection of:
+
+- AI content operations
+- Xiaohongshu creator tooling
+- Agentic workflow design
+- SEO/GEO growth experiments
+- Small-team automation
+
+## Related
+
+- Personal site: [maoxunxing.com](https://maoxunxing.com)
+- GitHub profile: [XingMXTeam](https://github.com/XingMXTeam)
